@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Language Fixer",
+  "version": "1.0",
+  "description": "Detects wrong language input (Arabic/English) and converts it automatically.",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}
