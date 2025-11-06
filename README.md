@@ -41,6 +41,7 @@ This is a great project for developers!
 
 ```bash
 git clone [https://github.com/eng-yossef/auto-language-fixer](https://github.com/eng-yossef/auto-language-fixer)
+```
 
 
 1.Open Chrome and go to:chrome://extensions/
