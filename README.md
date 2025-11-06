@@ -40,7 +40,7 @@ The fixer is activated via a shortcut:
 This is a great project for developers!
 
 ```bash
-git clone [https://github.com/eng-yossef/auto-language-fixer](https://github.com/eng-yossef/auto-language-fixer)
+git clone https://github.com/eng-yossef/auto-language-fixer
 ```
 
 
