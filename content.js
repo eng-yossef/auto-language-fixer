@@ -57,19 +57,41 @@ document.addEventListener('keydown', (e) => {
 
     if (!isEditable) return;
 
-    const text = active.value ?? active.innerText;
-    if (!text) return;
+    if (active.isContentEditable) {
+      // Handle contentEditable elements
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) return;
 
-    const lang = detectLanguage(text);
-    const newText = lang === 'arabic'
-      ? convertText(text, 'english')
-      : convertText(text, 'arabic');
+      const selectedText = selection.toString();
+      if (!selectedText) return;
 
-    if (active.value !== undefined) active.value = newText;
-    else active.innerText = newText;
+      const lang = detectLanguage(selectedText);
+      const newText = lang === 'arabic'
+        ? convertText(selectedText, 'english')
+        : convertText(selectedText, 'arabic');
 
-    // Optional: select all so you can instantly see the result
-    if (active.select) active.select();
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(document.createTextNode(newText));
+    } else {
+      // Handle input / textarea elements
+      const start = active.selectionStart;
+      const end = active.selectionEnd;
+
+      if (start === end) return; // nothing selected
+
+      const selectedText = active.value.substring(start, end);
+      const lang = detectLanguage(selectedText);
+      const newText = lang === 'arabic'
+        ? convertText(selectedText, 'english')
+        : convertText(selectedText, 'arabic');
+
+      active.value =
+        active.value.substring(0, start) + newText + active.value.substring(end);
+
+      // Re-select the converted text
+      active.setSelectionRange(start, start + newText.length);
+    }
 
     e.preventDefault();
   }
